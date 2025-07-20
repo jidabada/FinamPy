@@ -29,12 +29,17 @@ class FinamPy:
     logger = logging.getLogger('FinamPy')  # Будем вести лог
     metadata: tuple[str, str]  # Токен JWT в запросах
 
-    def __init__(self, access_token=Config.access_token):
+    def __init__(self, access_token=Config.access_token, options=None):
+    # Было
+    # def __init__(self, access_token=Config.access_token):
         """Инициализация
 
         :param str access_token: Торговый токен
         """
-        self.channel = secure_channel(self.server, ssl_channel_credentials())  # Защищенный канал
+        # Передаем options в secure_channel
+        self.channel = secure_channel(self.server, ssl_channel_credentials(), options=options)
+        # Было
+        # self.channel = secure_channel(self.server, ssl_channel_credentials())  # Защищенный канал
 
         # Сервисы
         self.auth_stub = AuthServiceStub(self.channel)
